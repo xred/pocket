@@ -1,3 +1,5 @@
+#coding=utf-8
+# -*- coding: UTF-8 -*-
 import time
 import json
 
@@ -30,12 +32,12 @@ def xmlToDict(xml):
  	theDict = xmltodict.parse(xml)
  	return theDict
 
-def jsonToDict(json):
-	theDict = json.loads(json)
+def jsonToDict(theJson):
+	theDict = json.loads(theJson)
 	return theDict
 
-def dictToJson(dict):
-	theJson = json.dumps(dict)
+def dictToJson(theDict):
+	theJson = json.dumps(theDict)
 	return theJson
 
 def postJson(url,json):
@@ -55,14 +57,30 @@ def postFile(url,name,filePath):
 	r = requests.post(url,files=files)
 	return r
 
-def simplePost(url,dict):
+def simplePost(url,theDict):
 	try:
 		import requests
 	except Exception, e:
 		print e
-	r = requests.post(url,data=dict)
+	r = requests.post(url,data=theDict)
 	return r
 
+def getRandom(low,heigh):
+	try:
+		import random
+	except Exception, e:
+		print e
+	rnd = random.randint(low,heigh)
+	return rnd
+
+def getLineNumber(filename):
+	try:
+		import os
+	except Exception, e:
+		print e
+	lineNumber = len(open(filename).readlines())
+	return lineNumber
+	
 class mailRose(object):
 	"""simple mail class"""
 	def __init__(self):
@@ -104,8 +122,7 @@ class simpleHTTPServerPocket(object):
 			import os.path
 		except Exception, e:
 			print e
-		def createStaticServer(a1):
-			print a1
+		def createStaticServer():
 			settings = {
 				"debug": True,
 				"static_path":os.path.join(os.path.dirname(os.path.abspath(__file__)),"./"),
@@ -126,5 +143,3 @@ class simpleHTTPServerPocket(object):
 			instance.start()
 		self.createStaticServer = createStaticServer
 
-sp = simpleHTTPServerPocket()
-sp.createStaticServer('fuck')
